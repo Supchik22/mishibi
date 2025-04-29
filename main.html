@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat</title>
+</head>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
+<div id="chatConteiner">
+<body>
+
+
+    
+    <h1>Chat Mishibi</h1>
+
+    <div id="messagesContainer">
+        <div class="message fadeIn">Привіт! Я Mishibi, ваш віртуальний помічник. Як я можу вам допомогти?</div>
+    </div>
+
+    <span id="userInputContainer">
+    
+    <input type="text" id="userInput" placeholder="Type your message here..."><button id="sendButton" onclick="sendMessage()">></button>
+    
+    
+    </span>
+</body>
+
+
+
+</div>
+
+
+<script>
+    let userInput = document.getElementById('userInput');
+    let userInputContainer = document.getElementById('userInputContainer');
+    
+    async function sendMessage() {
+      userInputContainer.style.display = "none";
+      receiveUserMessage(userInput.value);
+      
+      window.pywebview.api.send_prompt(userInput.value);
+
+      userInputContainer.style.display = "flex";
+        userInput.value = "";
+      
+    }
+    async function receiveUserMessage(message) {
+  let messagesContainer = document.getElementById('messagesContainer');
+  let newMessage = document.createElement('div');
+  newMessage.className = 'messageUser fadeIn';
+  newMessage.innerText = message;
+  messagesContainer.appendChild(newMessage);
+}
+
+async function receiveMessage(message) {
+  let messagesContainer = document.getElementById('messagesContainer');
+  let newMessage = document.createElement('div');
+  newMessage.className = 'message fadeIn';
+  newMessage.innerText = message;
+  messagesContainer.appendChild(newMessage);
+}
+
+
+  </script>
+</html>

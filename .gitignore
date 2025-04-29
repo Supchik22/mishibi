@@ -1,0 +1,11 @@
+*.exe
+*.out
+*.o
+*.obj
+
+# папка 
+info/
+
+__pycache__/
+*.pyc
+.env
