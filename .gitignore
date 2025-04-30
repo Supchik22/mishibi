@@ -5,8 +5,12 @@
 
 # папка 
 info/
+dist/
+build/
+main.spec
 
 __pycache__/
+
 *.pyc
 .env
 *.json
