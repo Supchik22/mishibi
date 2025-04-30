@@ -128,7 +128,10 @@ def prompt(user_input: str):
 
 import difflib
 
-client = Groq(api_key="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")
+from dotenv import load_dotenv
+load_dotenv()
+
+client = Groq(api_key=os.getenv('GROQ_API_KEY'))
 chat_history = []  # Історія чату зберігається тут
 
 def generate_completion(message_text: str, user_input: str) -> str:
