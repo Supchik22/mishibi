@@ -24,7 +24,7 @@
 
     <span id="userInputContainer">
     
-    <input type="text" id="userInput" placeholder="Type your message here..."><button id="sendButton" onclick="sendMessage()">></button>
+    <input type="text" id="userInput" placeholder="Type your message here..."><button id="jokey" onclick="this.textContent = this.textContent === '⚡' ? '🔮' : '⚡'">⚡</button><button id="sendButton" onclick="sendMessage()">></button>
     
     
     </span>
@@ -38,13 +38,13 @@
 <script>
     let userInput = document.getElementById('userInput');
     let userInputContainer = document.getElementById('userInputContainer');
-    
+    let userInputButtonType = document.getElementById('jokey');
     async function sendMessage() {
       userInputContainer.style.display = "none";
       receiveUserMessage(userInput.value);
       
-      window.pywebview.api.send_prompt(userInput.value);
-
+      window.pywebview.api.send_prompt(userInput.value, userInputButtonType.textContent);
+      
       userInputContainer.style.display = "flex";
         userInput.value = "";
       

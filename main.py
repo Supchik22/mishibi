@@ -95,10 +95,11 @@ def find_closest_message(user_input: str, messages: list, max_distance: int = 10
         #print("інфо і прогрес : ", msg["id"], " ", distance, " ", min_distance, " ", closest_msg["id"] if closest_msg else None)
 
     return closest_msg
-
-def prompt(user_input: str):
-    print("User input:", user_input)
-    messages = load_all_messages("info")
+messages = load_all_messages("info")
+mode_choosen = "⚡"  # Змінна для вибору режиму
+def prompt(user_input: str,x: str):
+    print("User input:", user_input, x)
+    mode_choosen = x  # Зберігаємо вибраний режим
     reply_cache = build_reply_cache(messages)
 
     closest_msg = find_closest_message(user_input, messages)
@@ -133,10 +134,9 @@ load_dotenv()
 
 client = Groq(api_key=os.getenv('GROQ_API_KEY'))
 chat_history = []  # Історія чату зберігається тут
-
 def generate_completion(message_text: str, user_input: str) -> str:
     global chat_history  # Щоб змінювати глобальну історію
-    print("\n \n"+ str(message_text)+  "\n \n")
+    print("\n \n" + str(message_text) + "\n \n")
     # Спочатку додамо системне повідомлення лише один раз
     if not chat_history:
         chat_history.append({
@@ -149,6 +149,17 @@ def generate_completion(message_text: str, user_input: str) -> str:
         "role": "user",
         "content": user_input + ". Можлива ваша відповідь: " + message_text,
     })
+
+    # Вибираємо 10 випадкових повідомлень з чату
+    if mode_choosen != "⚡":
+        random_messages = random.sample(messages, min(10, len(messages)))
+
+        # Додаємо ці повідомлення до історії для контексту
+        for msg in random_messages:
+            chat_history.append({
+                "role": "user",
+                "content": str(msg["text"]),
+            })
 
     stream = client.chat.completions.create(
         messages=chat_history,
@@ -175,8 +186,8 @@ def generate_completion(message_text: str, user_input: str) -> str:
 
 
 class Api:
-    def send_prompt(self, name):
-        prompt(name)
+    def send_prompt(self, name, x):
+        prompt(name,x)
 
 
 
