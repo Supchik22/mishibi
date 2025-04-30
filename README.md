@@ -15,10 +15,10 @@
 ### 🔸 Встановлення з вихідного коду:
 
 1. Клонуйте репозиторій:
-   `
-   git clone https://github.com/Supchik22/mishibi
+   ```bash
+   git clone https://github.com/Supchik22/mishibi 
    cd mishibi
-   `
+   ```
 
 2. Встановіть залежності:
    `
