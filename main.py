@@ -131,6 +131,7 @@ import difflib
 
 from dotenv import load_dotenv
 load_dotenv()
+MIN_LENGTH = 20  # Наприклад, 20 символів
 
 client = Groq(api_key=os.getenv('GROQ_API_KEY'))
 chat_history = []  # Історія чату зберігається тут
@@ -152,9 +153,13 @@ def generate_completion(message_text: str, user_input: str) -> str:
 
     # Вибираємо 10 випадкових повідомлень з чату
     if mode_choosen != "⚡":
-        random_messages = random.sample(messages, min(10, len(messages)))
+        # Фільтруємо повідомлення за довжиною
+        long_messages = [msg for msg in messages if len(msg["text"]) >= MIN_LENGTH]
 
-        # Додаємо ці повідомлення до історії для контексту
+        # Випадково вибираємо максимум 10 таких повідомлень
+        random_messages = random.sample(long_messages, min(10, len(long_messages)))
+
+        # Додаємо до історії чату
         for msg in random_messages:
             chat_history.append({
                 "role": "user",
